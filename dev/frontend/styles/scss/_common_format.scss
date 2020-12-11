@@ -1,0 +1,31 @@
+$principalColor: #ca161c;
+$backColor: #f1f0f0;
+$secundaryColor: #fff;
+$tertiaryColor: #000;
+$greyStandar: #606060;
+$blueHeaven: #3d7ea6;
+
+@mixin montserratBold {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    text-align: center;
+    letter-spacing: 0;
+}
+@mixin montserratMedium {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    text-align: center;
+    letter-spacing: 0;
+}
+@mixin robotoRegular {
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+    font-weight: 400;
+    letter-spacing: 0;
+}
+@mixin robotoBold {
+    font-family: 'Roboto', sans-serif;
+    text-align: left;
+    font-weight: 900;
+    letter-spacing: 0;
+}

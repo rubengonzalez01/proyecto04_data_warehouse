@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/styles.css">
+    <script src="https://kit.fontawesome.com/1ce69593ca.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;900&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+    <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+    <script lang="javascript" src="dist/FileSaver.min.js"></script>
+    <title>Data Waehouse</title>
+</head>
+<body>
+    <div id="general-container">
+    <header>
+        <nav class="disabled" id="nav">
+            <div class="logo-container">
+                <img src="assets/Logo-Human-Leap-Color.png" alt="logo" class="logo-icon">
+            </div>
+            <div class="menu-container">
+                <ul class="menu">
+                    <li class="option">
+                       <a class="link" id="contacts-button" href="#"> Contactos</a></li>
+                    <li class="option">
+                        <a class="link" id="companies-button" href="#">Compañías</a></li>
+                    <li class="option" id="option-users">
+                        <a class="link" id="users-button" href="#">Usuarios</a></li>
+                    <li class="option">
+                        <a class="link" id="regions-button" href="#">Región / Ciudad</a></li>
+                    <li class="option">
+                        <a class="link" id="logout-button" href="#"><i class="fas fa-sign-out-alt" title="Salir"></i></a></li>
+                </ul>
+            </div>
+            <div class="logued-user">
+                <h5 id="user-fullname">User</h5>
+            </div>
+        </nav>        
+    </header>
+    <main>
+        <!-- PANTALLAS SECUNDARIAS -->
+        <div class="modals">
+            <!-- Pantalla Login -->
+            <div class="login" id="login">
+                <div class="login-wrapper">
+                    <div class="logo-container">
+                        <img src="assets/Logo-Human-Leap-Color.png" alt="logo" class="logo-icon">
+                    </div>
+                    <div class="login-box">
+                        <i class="far fa-user"></i>
+                        <div class="login-inputs">                        
+                            <input type="text" id="username" placeholder="Usuario" autocomplete="off">
+                            <input type="password" id="password" placeholder="Password">
+                        </div>
+                        <div class="login-button">
+                            <button id="btn-login"><p id="inside">Ingresar</p><img id="spinner" class="disabled" src="assets/Double Ring-1.3s-200px.svg" alt="spinner"></button>
+                            <p class="disabled" id="login-error">Wrong user or password</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Pantalla de backgroud para los modals -->
+            <div class="background-modals disabled" id="background-modals"></div>
+            <!-- Spinner para las operaciones -->
+            <div class="spinner-modals" id="spinner-modals">
+                <img id="operation-spinner" class="disabled" src="assets/Double Ring-1s-200px.svg" alt="">
+            </div>
+            <!-- Pantalla de Logout -->
+            <div class="logout disabled" id="logout">
+                <div class="logout-wrapper">
+                    <p>¿Estás seguro de que deseas salir?</p>
+                    <div class="logout-buttons">
+                        <button class="btn-opt btn-primary" id="logout-si">Si</button>
+                        <button class="btn-opt btn-secundary" id="logout-no">No</button>
+                    </div>
+                </div>
+            </div>
+             <!-- Pantalla de confirmacion de operacion Contactos -->
+             <div class="confirmation disabled" id="confirmation-contact">
+                <div class="modal confirmation-modal">
+                    <div class="modal-wrapper confirmation-wrapper">
+                        <p id="question-contact">¿Estás seguro?</p>
+                        <div class="modal-buttons confirmation-buttons">
+                            <button class="btn-opt btn-primary" id="contact-yes">Si</button>
+                            <button class="btn-opt btn-primary disabled" id="contact-multi-yes">Si</button>
+                            <button class="btn-opt btn-secundary" id="contact-no">No</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Pantalla de confirmacion de operacion usuario-->
+            <div class="confirmation disabled" id="confirmation-user">
+                <div class="modal confirmation-modal">
+                    <div class="modal-wrapper confirmation-wrapper">
+                        <p id="question-user">¿Estás seguro?</p>
+                        <div class="modal-buttons confirmation-buttons">
+                            <button class="btn-opt btn-primary" id="users-yes">Si</button>
+                            <button class="btn-opt btn-primary disabled" id="users-multi-yes">Si</button>
+                            <button class="btn-opt btn-secundary" id="users-no">No</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Pantalla de confirmacion de operacion regiones -->
+            <div class="confirmation disabled" id="confirmation-reg">
+                <div class="modal confirmation-modal">
+                    <div class="modal-wrapper confirmation-wrapper">
+                        <p id="question-reg">¿Estás seguro?</p>
+                        <div class="modal-buttons confirmation-buttons">
+                            <button class="btn-opt btn-primary" id="region-yes">Si</button>
+                            <button class="btn-opt btn-primary disabled" id="country-yes">Si</button>
+                            <button class="btn-opt btn-primary disabled" id="city-yes">Si</button>
+                            <button class="btn-opt btn-secundary" id="region-no">No</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             <!-- Pantalla de confirmacion de operacion compañias -->
+             <div class="confirmation disabled" id="confirmation-company">
+                <div class="modal confirmation-modal">
+                    <div class="modal-wrapper confirmation-wrapper">
+                        <p id="question-company">¿Estás seguro?</p>
+                        <div class="modal-buttons confirmation-buttons">
+                            <button class="btn-opt btn-primary" id="company-yes">Si</button>
+                            <button class="btn-opt btn-primary disabled" id="company-multi-yes">Si</button>
+                            <button class="btn-opt btn-secundary" id="company-no">No</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Pantalla de notificacion de la respuesta de una operacion -->
+            <div class="notification disabled" id="notification">
+                <div class="modal notification-modal">
+                    <div class="modal-wrapper notification-wrapper">
+                        <p id="notification-message">Usuario borrado exitosamente</p>
+                        <div class="modal-buttons notification-buttons">
+                            <button class="btn-opt btn-primary" id="notification-accept">Aceptar</button>
+                            <button class="btn-opt btn-primary disabled" id="end-session-accept">Aceptar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Pantalla para obervar los canales de contacto de un Contacto -->
+            <div class="contact-channel-modal disabled" id="contact-channel-modal">
+                <div class="modal">
+                    <div class="modal-wrapper">
+                        <h3 id="contact-channel-modal-title">Canal</h3>
+                        <div class="modal-inputs">
+                            <label for="contact-channel-modal-name">Preferencia</label>
+                            <input class="border-default" type="text" id="contact-channel-modal-preference" disabled>
+                            <label for="contact-channel-modal-name">Cuenta</label>
+                            <input class="border-default" type="text" id="contact-channel-modal-account" disabled>
+                        </div>
+                        <div class="modal-buttons confirmation-buttons">
+                            <button class="btn-opt btn-primary" id="contact-channel-accept">Aceptar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+             <!-- Pantalla de formulario para operaciones sobre un Contacto -->
+             <div class="add-contact disabled" id="add-contact-modal">
+                <div class="modal">
+                    <div class="form-contact">
+                        <h3 id="add-contact-modal-title">AGREGAR CONTACTO</h3>
+                        <div class="form-inputs">
+                            <form action="" id="contact-form">
+                                <div class="form form-main">
+                                    <div>
+                                        <label for="add-contact-name">*Nombre</label>
+                                        <input class="border-default" type="text" id="add-contact-name">
+                                    </div>
+                                    <div>
+                                        <label for="add-contact-lastname">*Apellido</label>
+                                        <input class="border-default" type="text" id="add-contact-lastname">
+                                    </div>
+                                    <div>
+                                        <label for="add-contact-position">*Cargo</label>
+                                        <input class="border-default" type="text" id="add-contact-position">
+                                    </div>
+                                    <div>
+                                        <label for="add-contact-mail">*Email</label>
+                                        <input class="border-default" type="text" id="add-contact-mail">
+                                    </div>
+                                    <div class="company-container">
+                                        <label for="add-contact-company">*Compañía</label>
+                                        <select class="border-default" name="add-contact-company" id="add-contact-company" data-default-value="1" size="1"></select>
+                                    </div>
+                                </div>
+                                <div class="form form-contact-ubication">
+                                    <div>
+                                        <label for="add-contact-region">*Región</label>
+                                        <select class="border-default" name="add-contact-region" id="add-contact-region" size="1"></select>
+                                    </div>
+                                    <div>
+                                        <label for="add-contact-country">*País</label>
+                                        <select class="border-default" name="add-contact-country" id="add-contact-country" data-default-value="1" size="1" disabled></select>
+                                    </div>
+                                    <div>
+                                        <label for="add-contact-city">*Ciudad</label>
+                                        <select class="border-default" name="add-contact-city" id="add-contact-city" data-default-value="1" size="1" disabled></select>
+                                    </div>
+                                    <div>
+                                        <label for="add-contact-address">*Dirección</label>
+                                        <input class="border-default" type="text" id="add-contact-address" disabled>
+                                    </div>
+                                    <div class="interest-container">
+                                        <label for="add-contact-interest">*Interés</label>
+                                        <select class="border-default" name="add-contact-interest" id="add-contact-interest" size="1">
+                                            <option value=0>0%</option>
+                                            <option value=25>25%</option>
+                                            <option value=50>50%</option>
+                                            <option value=75>75%</option>
+                                            <option value=100>100%</option>
+                                        </select>
+                                    </div>
+                                    
+                                </div>
+                                <!-- subseccion en la cual es agregado uno o varios canales de contactos -->
+                                <div id="form-contact-channels">
+                                    <fieldset class="form form-contact-channels" >
+                                        <legend>CANALES DE CONTACTO</legend>
+                                        <div class="contact-channel" id="contact-channel-container-1"> 
+                                            <div class="check-container">
+                                                <label for="channel-check-1">Agregar</label>
+                                                <input class="border-default check" type="checkbox" id="channel-check-1">                                            
+                                            </div>                                           
+                                            <div>
+                                                <label for="add-contact-channel-1">Canal</label>
+                                                <select class="border-default cc-channel" name="add-contact-channel-1" id="add-contact-channel-1" size="1" disabled>
+                                                    <option hidden selected value=0>Seleccione un canal</option>
+                                                    <option value=1>Teléfono</option>
+                                                    <option value=2>Whatsapp</option>
+                                                    <option value=3>Instagram</option>
+                                                    <option value=4>Facebook</option>
+                                                    <option value=5>Linkedin</option>
+                                                </select>
+                                            </div>
+                                            <div>
+                                                <label for="add-contact-account-1">Cuenta del usuario</label>
+                                                <input class="border-default cc-account" type="text" id="add-contact-account-1" disabled>  
+                                            </div>
+                                            <div>
+                                                <label for="add-contact-preference-1">Preferencia</label>
+                                                <select class="border-default cc-preference" name="add-contact-preference-1" id="add-contact-preference-1" size="1" disabled>
+                                                    <option hidden selected value=0>Seleccione la preferencia</option>
+                                                    <option value=1>Sin preferencia</option>
+                                                    <option value=2>Canal favorito</option>
+                                                    <option value=3>No molestar</option>
+                                                </select>
+                                            </div>
+                                            <!-- <button class="add" id="new-channel" title="Agregar otro canal" disabled><i class="fas fa-plus"></i></button> -->
+                                        </div>
+                                        <div class="contact-channel" id="contact-channel-container-2">
+                                            <div class="check-container">
+                                                <label for="channel-check-2">Agregar</label>
+                                                <input class="border-default check" type="checkbox" id="channel-check-2">                                            
+                                            </div>  
+                                            <div>
+                                                <label for="add-contact-channel-2">Canal</label>
+                                                <select class="border-default cc-channel" name="add-contact-channel-2" id="add-contact-channel-2" size="1" disabled>
+                                                    <option hidden selected value=0>Seleccione un canal</option>
+                                                    <option value=1>Teléfono</option>
+                                                    <option value=2>Whatsapp</option>
+                                                    <option value=3>Instagram</option>
+                                                    <option value=4>Facebook</option>
+                                                    <option value=5>Linkedin</option>
+                                                </select>
+                                            </div>
+                                            <div>
+                                                <label for="add-contact-account-2">Cuenta del usuario</label>
+                                                <input class="border-default cc-account" type="text" id="add-contact-account-2" disabled>  
+                                            </div>
+                                            <div>
+                                                <label for="add-contact-preference-2">Preferencia</label>
+                                                <select class="border-default cc-preference" name="add-contact-preference-2" id="add-contact-preference-2" size="1" disabled>
+                                                    <option hidden selected value=0>Seleccione la preferencia</option>
+                                                    <option value=1>Sin preferencia</option>
+                                                    <option value=2>Canal favorito</option>
+                                                    <option value=3>No molestar</option>
+                                                </select>
+                                            </div>
+                                            <!-- <button class="add" id="new-channel" title="Agregar otro canal" disabled><i class="fas fa-plus"></i></button> -->
+                                        </div>
+                                        <div class="contact-channel" id="contact-channel-container-3">
+                                            <div class="check-container">
+                                                <label for="channel-check-3">Agregar</label>
+                                                <input class="border-default check" type="checkbox" id="channel-check-3">                                            
+                                            </div>   
+                                            <div>
+                                                <label for="add-contact-channel-3">Canal</label>
+                                                <select class="border-default cc-channel" name="add-contact-channel-3" id="add-contact-channel-3" size="1" disabled>
+                                                    <option hidden selected value=0>Seleccione un canal</option>
+                                                    <option value=1>Teléfono</option>
+                                                    <option value=2>Whatsapp</option>
+                                                    <option value=3>Instagram</option>
+                                                    <option value=4>Facebook</option>
+                                                    <option value=5>Linkedin</option>
+                                                </select>
+                                            </div>
+                                            <div>
+                                                <label for="add-contact-account-3">Cuenta del usuario</label>
+                                                <input class="border-default cc-account" type="text" id="add-contact-account-3" disabled>  
+                                            </div>
+                                            <div>
+                                                <label for="add-contact-preference-3">Preferencia</label>
+                                                <select class="border-default cc-preference" name="add-contact-preference-3" id="add-contact-preference-3" size="1" disabled>
+                                                    <option hidden selected value=0>Seleccione la preferencia</option>
+                                                    <option value=1>Sin preferencia</option>
+                                                    <option value=2>Canal favorito</option>
+                                                    <option value=3>No molestar</option>
+                                                </select>
+                                            </div>
+                                            <!-- <button class="add" id="new-channel" title="Agregar otro canal" disabled><i class="fas fa-plus"></i></button> -->
+                                        </div>
+                                        <div class="contact-channel" id="contact-channel-container-4">
+                                            <div class="check-container">
+                                                <label for="channel-check-4">Agregar</label>
+                                                <input class="border-default check" type="checkbox" id="channel-check-4">                                            
+                                            </div>  
+                                            <div>
+                                                <label for="add-contact-channel-4">Canal</label>
+                                                <select class="border-default cc-channel" name="add-contact-channel-4" id="add-contact-channel-4" size="1" disabled>
+                                                    <option hidden selected value=0>Seleccione un canal</option>
+                                                    <option value=1>Teléfono</option>
+                                                    <option value=2>Whatsapp</option>
+                                                    <option value=3>Instagram</option>
+                                                    <option value=4>Facebook</option>
+                                                    <option value=5>Linkedin</option>
+                                                </select>
+                                            </div>
+                                            <div>
+                                                <label for="add-contact-account-4">Cuenta del usuario</label>
+                                                <input class="border-default cc-account" type="text" id="add-contact-account-4" disabled>  
+                                            </div>
+                                            <div>
+                                                <label for="add-contact-preference-4">Preferencia</label>
+                                                <select class="border-default cc-preference" name="add-contact-preference-4" id="add-contact-preference-4" size="1" disabled>
+                                                    <option hidden selected value=0>Seleccione la preferencia</option>
+                                                    <option value=1>Sin preferencia</option>
+                                                    <option value=2>Canal favorito</option>
+                                                    <option value=3>No molestar</option>
+                                                </select>
+                                            </div>
+                                            <!-- <button class="add" id="new-channel" title="Agregar otro canal" disabled><i class="fas fa-plus"></i></button> -->
+                                        </div>
+                                        <div class="contact-channel" id="contact-channel-container-5">
+                                            <div class="check-container">
+                                                <label for="channel-check-5">Agregar</label>
+                                                <input class="border-default check" type="checkbox" id="channel-check-5">                                            
+                                            </div>   
+                                            <div>
+                                                <label for="add-contact-channel-5">Canal</label>
+                                                <select class="border-default cc-channel" name="add-contact-channel-5" id="add-contact-channel-5" size="1" disabled>
+                                                    <option hidden selected value=0>Seleccione un canal</option>
+                                                    <option value=1>Teléfono</option>
+                                                    <option value=2>Whatsapp</option>
+                                                    <option value=3>Instagram</option>
+                                                    <option value=4>Facebook</option>
+                                                    <option value=5>Linkedin</option>
+                                                </select>
+                                            </div>
+                                            <div>
+                                                <label for="add-contact-account-5">Cuenta del usuario</label>
+                                                <input class="border-default cc-account" type="text" id="add-contact-account-5" disabled>  
+                                            </div>
+                                            <div>
+                                                <label for="add-contact-preference-5">Preferencia</label>
+                                                <select class="border-default cc-preference" name="add-contact-preference-5" id="add-contact-preference-5" size="1" disabled>
+                                                    <option hidden selected value=0>Seleccione la preferencia</option>
+                                                    <option value=1>Sin preferencia</option>
+                                                    <option value=2>Canal favorito</option>
+                                                    <option value=3>No molestar</option>
+                                                </select>
+                                            </div>
+                                            <!-- <button class="add" id="new-channel" title="Agregar otro canal" disabled><i class="fas fa-plus"></i></button> -->
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="form-buttons">
+                            <button class="btn-opt btn-primary disabled" id="create-contact">Crear</button>
+                            <button class="btn-opt btn-primary disabled" id="update-contact">Actualizar</button>
+                            <button class="btn-opt btn-secundary" id="cancel-contact">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Pantalla de formulario para operaciones sobre una region/pais/ciudad -->
+            <div class="ubications-modal disabled" id="ubications-modal">
+                <div class="modal">
+                    <div class="modal-wrapper" id="modal-form">
+                        <h3 id="ubications-modal-title">Agregar región</h3>
+                        <div class="modal-inputs">
+                            <label for="ubications-modal-name">Nombre</label>
+                            <input class="border-default" type="text" id="ubications-modal-name">
+                        </div>
+                        <div class="modal-buttons confirmation-buttons">
+                            <button class="btn-opt btn-primary" id="create-ubication">Crear</button>
+                            <button class="btn-opt btn-primary disabled" id="update-ubication">Actualizar</button>
+                            <button class="btn-opt btn-secundary" id="cancel-ubication">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Pantalla de formulario para operaciones sobre un usuario -->
+            <div class="add-user disabled" id="add-user-modal">
+                <div class="modal">
+                    <div class="form-wrapper">
+                        <h3 id="add-user-modal-title">AGREGAR USUARIO</h3>
+                        <div class="form-inputs">
+                            <form action="" id="user-form">
+                                <label for="add-user-username">*Username</label>
+                                <input class="border-default" type="text" id="add-user-username" required>
+                                <label for="add-user-firstname">*Nombre</label>
+                                <input class="border-default" type="text" id="add-user-firstname" required>
+                                <label for="add-user-lastname">*Apellido</label>
+                                <input class="border-default" type="text" id="add-user-lastname" required>
+                                <label for="add-user-mail">*Email</label>
+                                <input class="border-default" type="email" id="add-user-mail" required>
+                                <label for="add-user-profile">*Perfil</label>
+                                <select name="add-user-profile" id="add-user-profile" required data-default-value="1">
+                                    <option value="1">Contacto</option>
+                                    <option value="2">Administrador</option>
+                                </select>
+                                <label for="add-user-password">*Contraseña</label>
+                                <input class="border-default" type="password" id="add-user-password" required>
+                                <label for="add-user-password2">*Repetir contraseña</label>
+                                <input class="border-default" type="password" id="add-user-password2" required>
+                            </form>
+                        </div>
+                        <div class="form-buttons">
+                            <button class="btn-opt btn-primary disabled" id="create-user">Crear</button>
+                            <button class="btn-opt btn-primary disabled" id="update-user">Actualizar</button>
+                            <button class="btn-opt btn-secundary" id="cancel-user">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Pantalla de formulario para operaciones sobre una compañía -->
+            <div class="add-company disabled" id="add-company-modal">
+                <div class="modal">
+                    <div class="form-wrapper">
+                        <h3 id="add-company-modal-title">AGREGAR COMPAÑÍA</h3>
+                        <div class="form-inputs">
+                            <form action="" id="company-form">
+                                <label for="add-company-name">*Nombre</label>
+                                <input class="border-default" type="text" id="add-company-name">
+                                <label for="add-company-address">*Dirección</label>
+                                <input class="border-default" type="text" id="add-company-address">
+                                <label for="add-company-phone">*Teléfono</label>
+                                <input class="border-default" type="text" id="add-company-phone">
+                                <label for="add-company-mail">*Email</label>
+                                <input class="border-default" type="email" id="add-company-mail">
+                                <label for="add-company-city">*Ciudad</label>
+                                <div class="container">
+                                    <select name="add-company-city" id="add-company-city" data-default-value="1" size="1"></select>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="form-buttons">
+                            <button class="btn-opt btn-primary disabled" id="create-company">Crear</button>
+                            <button class="btn-opt btn-primary disabled" id="update-company">Actualizar</button>
+                            <button class="btn-opt btn-secundary" id="cancel-company">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- PANTALLAS PRINCIPALES -->
+        <div class="core disabled" id="core">
+            <!------------- Seccion Contactos ------------->
+            <section class="contacts" id="contacts-section">
+                <div class="actions-container">
+                    <div class="search">
+                        <div class="title">
+                            <h1>Contactos</h1>
+                        </div>
+                        <div class="search-bar">
+                            <div id="search-components">                                
+                                <input class="search-input" id="contacts-search-input" type="text" placeholder="Buscar contactos">
+                                <i id="contacts-search-button" class="fas fa-search search-button" title="Buscar"></i>
+                            </div>
+                        </div>
+                        <!-- contenedor que me mostrara cada una de las opciones de sugerencia de busqueda -->
+                            <div id="autocomplete2" class="autocomplete">
+                                <!-- <hr id="search-hr"> -->
+                                <div class="hidden-search-option contact-hidden" id="search-option5">
+                                    <button type="submit" class="hidden-button" id="hidden-button5">
+                                        <i class="fas fa-search md-24"></i>
+                                    </button>
+                                    <label id="opt5" class="contact-opcion opcion"></label>
+                                </div>
+                                <div class="hidden-search-option contact-hidden" id="search-option6">
+                                    <button type="submit" class="hidden-button" id="hidden-button6">
+                                        <i class="fas fa-search md-24"></i>
+                                    </button>
+                                    <label id="opt6" class="contact-opcion opcion"></label>
+                                </div>   
+                                <div class="hidden-search-option contact-hidden" id="search-option7">
+                                    <button type="submit" class="hidden-button" id="hidden-button7">
+                                        <i class="fas fa-search md-24"></i>
+                                    </button>
+                                    <label id="opt7" class="contact-opcion opcion"></label>
+                                </div>
+                                <div class="hidden-search-option contact-hidden" id="search-option8">
+                                    <button type="submit" class="hidden-button" id="hidden-button8">
+                                        <i class="fas fa-search md-24"></i>
+                                    </button>
+                                    <label id="opt8" class="contact-opcion opcion"></label>
+                                </div>
+                            </div>
+                    </div>
+                    <div class="operations-buttons">
+                        <div class="semi-crud">
+                            <button class="btn add" id="add-contact" title="Agregar contacto"><i class="fas fa-user-plus"></i></button>
+                            <button class="btn multidelete disabled" id="multidelete-contact" title="Borrar múltiples contactos"><i class="far fa-trash-alt"></i></button>
+                        </div>
+                        <div class="extra">
+                            <!-- <button class="btn import" title="Importar contactos"><i class="fas fa-file-import"></i></button> -->
+                            <div class="exportation disabled" id="exportation">
+                                <button class="btn-export first" id="only-selected">Contactos seleccionados</button>
+                                <button class="btn-export" id="listed">Contactos listados</button>
+                            </div>
+                            <button class="btn export" id="export-contacts"title="Exportar contactos"><i class="fas fa-file-export"></i></button>
+                            <button class="btn refresh" id="refresh-contacts" title="Actualizar"><i class="fas fa-redo-alt"></i></button>
+                        </div>
+                    </div>
+                </div>  
+                <div class="table-container">
+                    <div class="table-header">
+                        <input type="checkbox" id="contacts-multicheck">
+                        <div class="table-title-container">
+                            <ul class="table-title six-elements">
+                                <li class="table-item" id="li-contact">Contacto</li>
+                                <li class="table-item" id="li-country">Pais/Región</li>
+                                <li class="table-item" id="li-company">Compañía</li>
+                                <li class="table-item" id="li-position">Cargo</li>
+                                <li class="table-item" id="li-channel">Canal preferido</li>
+                                <li class="table-item" id="li-interest">Interes</li>
+                            </ul>
+                        </div>
+                        <span>Acciones</span>
+                    </div>
+                    <div class="table-body" id="contacts-table-body"></div>
+                    <div class="table-buttons" id="contacts-table-buttons">
+                        <button class="page-button" id="contacts-previous"><i class="far fa-caret-square-left"></i></button>
+                        <button class="page-button" id="contacts-next"><i class="far fa-caret-square-right"></i></button>
+                    </div>
+                </div>
+            </section>
+
+            <!---------------------------------- Seccion Compañias -------------------------------->
+            <section class="companies disabled" id="companies-section">
+                <div class="actions-container">
+                    <div class="search">
+                        <div class="title">
+                            <h1>Compañías</h1>
+                        </div>
+                    </div>
+                    <div class="operations-buttons">
+                        <div class="semi-crud">
+                            <button class="btn add" id="add-company" title="Agregar compañía"><i class="fas fa-plus"></i></button>
+                            <button class="btn multidelete disabled" id="multidelete-company" title="Borrar múltiples compañías"><i class="far fa-trash-alt"></i></button>
+                        </div>
+                        <div class="extra">
+                            <button class="btn refresh" id="refresh-companies" title="Actualizar"><i class="fas fa-redo-alt"></i></button>
+                        </div>
+                    </div>
+                </div>  
+                <div class="table-container">
+                    <div class="table-header">
+                        <input type="checkbox" id="companies-multicheck">
+                        <div class="table-title-container">
+                            <ul class="table-title six-elements">
+                                <li class="table-item" id="licompany-name">Nombre</li>
+                                <li class="table-item" id="licompany-address">Dirección</li>
+                                <li class="table-item" id="licompany-city">Ciudad</li>
+                                <li class="table-item" id="licompany-country">Pais</li>
+                                <li class="table-item" id="licompany-mail">Mail</li>
+                                <li class="table-item" id="licompany-phone">Telefono</li>
+                            </ul>
+                        </div>
+                        <span>Acciones</span>
+                    </div>
+                    <div class="table-body" id="companies-table-body"></div>
+                    <div class="table-buttons" id="companies-table-buttons">
+                        <button class="page-button" id="companies-previous"><i class="far fa-caret-square-left"></i></button>
+                        <button class="page-button" id="companies-next"><i class="far fa-caret-square-right"></i></button>
+                    </div>
+                </div>
+            </section>
+
+            <!----------------------------------- Seccion Usuarios -------------------------------->
+            <section class="users disabled" id="users-section">
+                <div class="actions-container">
+                    <div class="search">
+                        <div class="title">
+                            <h1>Usuarios</h1>
+                        </div>
+                        <div class="search-bar">
+                            <div id="search-components">                                
+                                <input class="search-input" id="users-search-input" type="text" placeholder="Buscar usuarios">
+                                <i id="users-search-button" class="fas fa-search search-button" title="Buscar"></i>
+                            </div>
+
+                        </div>
+                        <!-- contenedor que me mostrara cada una de las opciones de sugerencia de busqueda -->
+                            <div id="autocomplete" class="autocomplete">
+                                <!-- <hr id="search-hr"> -->
+                                <div class="hidden-search-option users-hidden" id="search-option1">
+                                    <button type="submit" class="hidden-button" id="hidden-button1">
+                                        <i class="fas fa-search md-24"></i>
+                                    </button>
+                                    <label id="opt1" class="user-opcion opcion"></label>
+                                </div>
+                                <div class="hidden-search-option users-hidden" id="search-option2">
+                                    <button type="submit" class="hidden-button" id="hidden-button2">
+                                        <i class="fas fa-search md-24"></i>
+                                    </button>
+                                    <label id="opt2" class="user-opcion opcion"></label>
+                                </div>   
+                                <div class="hidden-search-option users-hidden" id="search-option3">
+                                    <button type="submit" class="hidden-button" id="hidden-button3">
+                                        <i class="fas fa-search md-24"></i>
+                                    </button>
+                                    <label id="opt3" class="user-opcion opcion"></label>
+                                </div>
+                                <div class="hidden-search-option users-hidden" id="search-option4">
+                                    <button type="submit" class="hidden-button" id="hidden-button4">
+                                        <i class="fas fa-search md-24"></i>
+                                    </button>
+                                    <label id="opt4" class="user-opcion opcion"></label>
+                                </div>
+                            </div>
+                    </div>
+                    <div class="operations-buttons">
+                        <div class="semi-crud">
+                            <button class="btn add" id="add-user" title="Agregar usuario"><i class="fas fa-user-plus"></i></button>
+                            <button class="btn multidelete disabled" id="multidelete-user" title="Borrar múltiples usuarios"><i class="far fa-trash-alt"></i></button>
+                        </div>
+                        <div class="extra">
+                            <button class="btn refresh" id="refresh-users" title="Actualizar"><i class="fas fa-redo-alt"></i></button>
+                        </div>
+                    </div>
+                </div>  
+                <div class="table-container">
+                    <div class="table-header">
+                        <input type="checkbox" id="users-multicheck">
+                        <div class="table-title-container">
+                            <ul class="table-title five-elements">
+                                <li class="table-item" id="liuser-username">Nombre de usuario</li>
+                                <li class="table-item" id="liuser-lastname">Apellido</li>
+                                <li class="table-item" id="liuser-firstname">Nombre</li>
+                                <li class="table-item" id="liuser-mail">Mail</li>
+                                <li class="table-item" id="liuser-profile">Perfil</li>
+                            </ul>
+                        </div>
+                        <span>Acciones</span>
+                    </div>
+                    <div class="table-body" id="users-table-body"></div>
+                    <div class="table-buttons" id="users-table-buttons">
+                        <button class="page-button" id="users-previous"><i class="far fa-caret-square-left"></i></button>
+                        <button class="page-button" id="users-next"><i class="far fa-caret-square-right"></i></button>
+                    </div>
+                </div>
+            </section>
+
+            <!----------------------------------- Seccion Regiones -------------------------------->
+            <section class="regions disabled" id="regions-section">
+                <div class="actions-container">
+                    <div class="search">
+                        <div class="title">
+                            <h1>Regiones / Países / Ciudades</h1>
+                        </div>
+                    </div>
+                    <div class="operations-buttons">
+                        <div class="semi-crud">
+                            <button class="btn add disabled" id="add-node" title="Agregar nodo"><i class="fas fa-plus"></i></button>
+                            <button class="btn disabled" id="edit-node" title="Editar nodo"><i class="fas fa-edit"></i></button>
+                            <button class="btn disabled" id="delete-node" title="Borrar nodo"><i class="far fa-trash-alt"></i></button>
+                        </div>
+                        <div class="extra">
+                            <button class="btn btn-text" id="expander_todos">Expandir todos</button>
+                            <button class="btn btn-text" id="contraer_todos">Contraer todos</button>
+                            <button class="btn refresh" id="refresh-tree" title="Actualizar"><i class="fas fa-redo-alt"></i></button>
+                        </div>
+                    </div>
+                </div>  
+                <div class="table-container">
+                    <div class="table-header">                       
+                        <h5>Seleccione uno de los nodos del árbol para ver las opciones disponibles.</h5>
+                    </div>
+                    <div class="table-body" id="regions-table-body">
+                        <div id="jstree"></div>                        
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+    <footer></footer>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+    <script src="js/users/users.js"></script>
+    <script src="js/users/users-services.js"></script>
+    <script src="js/regions/regions.js"></script>
+    <script src="js/regions/regions-services.js"></script>
+    <script src="js/companies/companies.js"></script>
+    <script src="js/companies/companies-services.js"></script>
+    <script src="js/contacts/contacts.js"></script>
+    <script src="js/contacts/contacts-services.js"></script>
+    <script src="js/modals.js"></script>
+    <script src="js/menu.js"></script>
+</body>
+</html>

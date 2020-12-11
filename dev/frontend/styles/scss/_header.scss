@@ -1,0 +1,48 @@
+header{
+    nav{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: $principalColor;
+        padding: 8px 30px;
+        .logo-icon{
+            width: 100px;
+        }
+        .menu-container{
+            .menu{
+                display: inline-flex;
+                justify-content: flex-end;
+                .option{
+                    list-style: none;
+                    margin: 17px;
+                    .link{
+                        @include robotoRegular;
+                        text-decoration: none;                    
+                        color: $secundaryColor;
+                        font-size: 13px;
+                        line-height: 18px;
+                        &:hover{
+                            border-bottom: 3px solid $secundaryColor;
+                        }
+                        &:active{
+                            color: $tertiaryColor;
+                            border-bottom: 3px solid $tertiaryColor;
+                        }
+                        i{
+                            font-size: 18px;
+                        }
+                    }                    
+                }
+            }
+        }
+        .logued-user{
+            position: absolute;
+            right: 30px;
+            top: 90px;
+            h5{
+                @include montserratMedium;
+                color: $principalColor;
+            }
+        }
+    }
+}
