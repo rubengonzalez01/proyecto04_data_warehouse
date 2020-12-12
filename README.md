@@ -6,7 +6,7 @@
   * Descargar desde la plataforma de Acamica el fichero **proyecto04_data_warehouse.zip** y descomprimirlo en el entorno local.
   * Desde una terminal en un nuevo workspace ejecutar:
   
-      **git clone https://github.com/rubengonzalez01/proyecto03_dalilah_resto.git**
+      **git clone https://github.com/rubengonzalez01/proyecto04_data_warehouse.git**
 	
 2- Se requiere tener un servidor de base de datos MySQL. Utilizar un cliente de base de datos adecuado y conectarse con usuario con permisos de administador (root). 
 
@@ -27,5 +27,16 @@
 7- Hecho esto, verificar que el servidor indique en la consola que se ha inicializado en el puerto 3000 y se ha conectado en la base de datos.
 
 8- Si todos los pasos fueron correctos, el servidor ya se encuentra disponible para ser utilizado.
+
+9- Por último, para poder efectuar la pruebas el proyecto incorpora 2 usuarios para las mismas:
+
+  *usuario*: rubgonzalez
+  *password*: 111222
+  *perfil*: Administrador
+
+  *usuario*: contacto
+  *password*: 123456
+  *perfil*: Contactos
+
 
 FIN

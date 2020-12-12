@@ -136,6 +136,19 @@ function closeAddUser(){
     document.getElementById("user-form").reset();
     let addUserModal = document.getElementById("add-user-modal");    
     addUserModal.classList.add("disabled");
+
+    inputUsername.classList.add("border-default"); 
+    inputUsername.classList.remove("border-no-content"); 
+    inputFirstname.classList.add("border-default"); 
+    inputFirstname.classList.remove("border-no-content"); 
+    inputLastname.classList.add("border-default"); 
+    inputLastname.classList.remove("border-no-content"); 
+    inputMail.classList.add("border-default"); 
+    inputMail.classList.remove("border-no-content"); 
+    inputPass.classList.add("border-default"); 
+    inputPass.classList.remove("border-no-content"); 
+    inputPass2.classList.add("border-default"); 
+    inputPass2.classList.remove("border-no-content"); 
 }
 
 
@@ -422,7 +435,7 @@ async function multipleDeleteUser(){
             }
 
             operationSpinner.classList.add("disabled");
-            console.log("SelectedUsersArray ", selectedUsersArray)
+            selectedUsersArray = [];
 
             let message = "Se han borrado los usuarios seleccionados."
             toggleNotificacionModal(message);

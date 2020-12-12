@@ -322,7 +322,7 @@ async function multipleDeleteContact(){
             }
 
             operationSpinner.classList.add("disabled");
-            console.log("selectedContactArray ", selectedContactArray)
+            selectedContactArray = [];
 
             let message = "Se han borrado los contactos seleccionados";
             toggleNotificacionModal(message);
@@ -915,6 +915,7 @@ function closeContactForm(){
     clearSelectChild(inputContactCity);
     inputContactCountry.disabled = true;
     inputContactCity.disabled = true;
+    inputContactAddress.disabled = true;
     inputContactChannel1.disabled = true
     inputContactAccount1.disabled = true;
     inputContactPreference1.disabled = true;
@@ -930,6 +931,56 @@ function closeContactForm(){
     inputContactChannel5.disabled = true
     inputContactAccount5.disabled = true;
     inputContactPreference5.disabled = true;
+    inputContactName.classList.add("border-default"); 
+    inputContactName.classList.remove("border-no-content");
+    inputContactLastname.classList.add("border-default"); 
+    inputContactLastname.classList.remove("border-no-content");
+    inputContactPosition.classList.add("border-default"); 
+    inputContactPosition.classList.remove("border-no-content");
+    inputContactMail.classList.add("border-default"); 
+    inputContactMail.classList.remove("border-no-content");
+    inputContactCompany.classList.add("border-default"); 
+    inputContactCompany.classList.remove("border-no-content");
+    inputContactRegion.classList.add("border-default"); 
+    inputContactRegion.classList.remove("border-no-content");
+    inputContactCountry.classList.add("border-default"); 
+    inputContactCountry.classList.remove("border-no-content");
+    inputContactCity.classList.add("border-default"); 
+    inputContactCity.classList.remove("border-no-content");
+    inputContactAddress.classList.add("border-default"); 
+    inputContactAddress.classList.remove("border-no-content");
+    inputContactInterest.classList.add("border-default"); 
+    inputContactInterest.classList.remove("border-no-content");
+    inputContactChannel1.classList.add("border-default"); 
+    inputContactChannel1.classList.remove("border-no-content");
+    inputContactChannel2.classList.add("border-default"); 
+    inputContactChannel2.classList.remove("border-no-content");
+    inputContactChannel3.classList.add("border-default"); 
+    inputContactChannel3.classList.remove("border-no-content");
+    inputContactChannel4.classList.add("border-default"); 
+    inputContactChannel4.classList.remove("border-no-content");
+    inputContactChannel5.classList.add("border-default"); 
+    inputContactChannel5.classList.remove("border-no-content");
+    inputContactAccount1.classList.add("border-default"); 
+    inputContactAccount1.classList.remove("border-no-content");
+    inputContactAccount2.classList.add("border-default"); 
+    inputContactAccount2.classList.remove("border-no-content");
+    inputContactAccount3.classList.add("border-default"); 
+    inputContactAccount3.classList.remove("border-no-content");
+    inputContactAccount4.classList.add("border-default"); 
+    inputContactAccount4.classList.remove("border-no-content");
+    inputContactAccount5.classList.add("border-default"); 
+    inputContactAccount5.classList.remove("border-no-content");
+    inputContactPreference1.classList.add("border-default"); 
+    inputContactPreference1.classList.remove("border-no-content");
+    inputContactPreference2.classList.add("border-default"); 
+    inputContactPreference2.classList.remove("border-no-content");
+    inputContactPreference3.classList.add("border-default"); 
+    inputContactPreference3.classList.remove("border-no-content");
+    inputContactPreference4.classList.add("border-default"); 
+    inputContactPreference4.classList.remove("border-no-content");
+    inputContactPreference5.classList.add("border-default"); 
+    inputContactPreference5.classList.remove("border-no-content");
     
 }
 

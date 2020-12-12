@@ -355,6 +355,8 @@ function closeUbicationForm(){
     backgroundModalsManage();
     let ubicationsModal = document.getElementById("ubications-modal");
     ubicationsModal.classList.add("disabled");
+    inputUbicationName.classList.add("border-default");
+    inputUbicationName.classList.remove("border-no-content"); 
 }
 
 

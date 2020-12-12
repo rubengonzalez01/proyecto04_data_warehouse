@@ -1,7 +1,7 @@
--- Script de Base de datos del proyecto 04: Data Warehouse
+-- Script de Base de datos del proyecto 04 de Acamica: Data Warehouse
 -- Autor: Rubén González
 -- https://www.linkedin.com/in/ing-ruben-j-gonzalez/
--- Nov 2020
+-- Dic 2020
 
 
 -- Creacion de la base de datos
@@ -22,8 +22,8 @@ create table profiles(
 	description varchar(255) not null,
 	primary key (id)
 );
-insert into profiles(id, name, description) values(1, 'contacts', 'Puede realizar todas las acciones sobre los contactos.');
-insert into profiles(id, name, description) values(2, 'administrator', 'Usuario de la app con permisos de administador. También crear nuevos usuarios.');
+insert into profiles(id, name, description) values(1, 'Contactos', 'Puede realizar todas las acciones sobre los contactos pero no puede crear usuarios.');
+insert into profiles(id, name, description) values(2, 'Administrador', 'Usuario de la app con permisos de administador. También crear nuevos usuarios.');
 commit;
 
 
@@ -43,6 +43,7 @@ create table users(
 );
 insert into users(username, firstname, lastname, mail, password, profile_id, is_active)
 values('rubgonzalez', 'Ruben', 'Gonzalez', 'rubengonzalez@gmail.com', '111222', 2, 'true');
+values('contacto', 'Ruben', 'Contacto', 'rubencontacto@gmail.com', '123456', 1, 'true');
 commit;
 
 

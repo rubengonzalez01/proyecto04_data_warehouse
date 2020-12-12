@@ -222,6 +222,7 @@ async function multipleDeleteCompany(){
             }
 
             operationSpinner.classList.add("disabled");
+            selectedCompaniesArray = [];
 
             let message = "Se han borrado las compañías seleccionadas";
             toggleNotificacionModal(message);
