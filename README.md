@@ -30,14 +30,14 @@
 
 9- Por último, para poder efectuar la pruebas el proyecto incorpora 2 usuarios para las mismas:
 
-	* Perfil: Administrador
- 		* *usuario*: rubgonzalez
- 		* *password*: 111222
+ * Perfil: Administrador
+	* usuario: rubgonzalez
+ 	* password: 111222
  
  
-	* Perfil: Contactos
- 		* *usuario*: contacto
- 		* *password*: 123456
+ * Perfil: Contactos
+ 	* usuario: contacto
+ 	* password: 123456
  
 
 
