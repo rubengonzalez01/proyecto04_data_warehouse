@@ -6,7 +6,7 @@
   * Descargar desde la plataforma de Acamica el fichero **proyecto04_data_warehouse.zip** y descomprimirlo en el entorno local.
   * Desde una terminal en un nuevo workspace ejecutar:
 		
-	git clone https://github.com/rubengonzalez01/proyecto04_data_warehouse.git
+		git clone https://github.com/rubengonzalez01/proyecto04_data_warehouse.git
 	
 2- Se requiere tener un servidor de base de datos MySQL. Utilizar un cliente de base de datos adecuado y conectarse con usuario con permisos de administador (root). 
 
@@ -30,14 +30,14 @@
 
 9- Por último, para poder efectuar la pruebas el proyecto incorpora 2 usuarios para las mismas:
 
- * Perfil: Administrador
- 	* *usuario*: rubgonzalez
- 	* *password*: 111222
+	* Perfil: Administrador
+ 		* *usuario*: rubgonzalez
+ 		* *password*: 111222
  
  
- * Perfil: Contactos
- 	* *usuario*: contacto
- 	* *password*: 123456
+	* Perfil: Contactos
+ 		* *usuario*: contacto
+ 		* *password*: 123456
  
 
 
