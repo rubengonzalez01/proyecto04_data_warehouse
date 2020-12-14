@@ -157,7 +157,7 @@ function loadContacts(registers){
         let btnEdit = document.createElement("button");
         btnTrash.innerHTML = '<i class="fas fa-trash-alt"></i>';
         btnTrash.title = "Borrar";
-        btnEdit.innerHTML = '<i class="fas fa-edit"></i>';
+        btnEdit.innerHTML = '<i class="fas fa-user-edit"></i>';
         btnEdit.title = "Editar";
         divActions.appendChild(btnTrash);
         divActions.appendChild(btnEdit);

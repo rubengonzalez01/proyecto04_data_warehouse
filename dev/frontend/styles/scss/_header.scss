@@ -20,14 +20,18 @@ header{
                         text-decoration: none;                    
                         color: $secundaryColor;
                         font-size: 13px;
+                        line-height: 18px;                        
+                        i{
+                            font-size: 18px;
+                        }
+                    }
+                    .active{
+                        @include robotoRegular;
+                        text-decoration: none;                    
+                        color: $secundaryColor;
+                        font-size: 13px;
                         line-height: 18px;
-                        &:hover{
-                            border-bottom: 3px solid $secundaryColor;
-                        }
-                        &:active{
-                            color: $tertiaryColor;
-                            border-bottom: 3px solid $tertiaryColor;
-                        }
+                        border-bottom: 3px solid $secundaryColor;
                         i{
                             font-size: 18px;
                         }

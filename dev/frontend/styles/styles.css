@@ -1000,16 +1000,23 @@ header nav .menu-container .menu .option .link {
   line-height: 18px;
 }
 
-header nav .menu-container .menu .option .link:hover {
+header nav .menu-container .menu .option .link i {
+  font-size: 18px;
+}
+
+header nav .menu-container .menu .option .active {
+  font-family: 'Roboto', sans-serif;
+  text-align: center;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-decoration: none;
+  color: #fff;
+  font-size: 13px;
+  line-height: 18px;
   border-bottom: 3px solid #fff;
 }
 
-header nav .menu-container .menu .option .link:active {
-  color: #000;
-  border-bottom: 3px solid #000;
-}
-
-header nav .menu-container .menu .option .link i {
+header nav .menu-container .menu .option .active i {
   font-size: 18px;
 }
 

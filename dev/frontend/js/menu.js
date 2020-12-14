@@ -83,18 +83,37 @@ async function showSection(selected){
     regionsSection.classList.add("disabled");
 
     selectedSection.classList.remove("disabled");
+
+    //dejo los botones por default
+    btnUsers.classList.remove("active");
+    btnRegions.classList.remove("active");
+    btnCompanies.classList.remove("active");
+    btnContacts.classList.remove("active");
+    btnUsers.classList.add("link");
+    btnRegions.classList.add("link");
+    btnCompanies.classList.add("link");
+    btnContacts.classList.add("link");
+
     switch(selectedSection.id){
         case 'users-section': 
+                                btnUsers.classList.remove("link");
+                                btnUsers.classList.add("active");
                                 getAllUsers();
                                 break;
                                 
         case 'regions-section':
+                                btnRegions.classList.remove("link");
+                                btnRegions.classList.add("active");
                                 getAllUbications();
                                 break;
         case 'companies-section':
+                                btnCompanies.classList.remove("link");
+                                btnCompanies.classList.add("active");
                                 getAllCompanies();
                                 break;
         case 'contacts-section':
+                                btnContacts.classList.remove("link");
+                                btnContacts.classList.add("active");
                                 getAllContacts();
                                 break;
         default:
